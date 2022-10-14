@@ -54,12 +54,25 @@ export default function App() {
   }, []);
 
 
+  //첫번째 return문으로 작성시에는, 전체 당첨자가 아닌 가장 최근에 당첨된 1명만 보여진다.
+  // return (
+  //     <div>
+  //         {cards.length > 0 && <button onClick={cardDraw}>추첨하기</button>}
+  //         {/*pickedCards의 마지막 요소를 보내주면, businessCard에게 가장 최근 사람의 정보를 넘겨주게 됨.*/}
+  //         {pickedCards.length > 0 && <BusinessCard info={pickedCards[pickedCards.length -1]} />}
+  //     </div>
+  // );
 
-  return (
-      <div>
-          {cards.length > 0 && <button onClick={cardDraw}>추첨하기</button>}
-          {/*pickedCards의 마지막 요소를 보내주면, businessCard에게 가장 최근 사람의 정보를 넘겨주게 됨.*/}
-          {pickedCards.length > 0 && <BusinessCard info={pickedCards[pickedCards.length -1]} />}
-      </div>
-  );
+
+    //두번째 return문으로 작성시에는, 당첨자들이 모두 보여지게 된다.
+    //key는 고유하게 식별할 수 있는 값으로 사용해야 한다. 반드시 map 함수를 돌릴 때 사용할 것.
+    const result = pickedCards.map(pickedCard => <BusinessCard info={pickedCard} key={pickedCard.phoneNumber}/>);
+
+    return (
+        <div>
+            {cards.length > 0 && <button onClick={cardDraw}>추첨하기</button>}
+            {/*pickedCards의 마지막 요소를 보내주면, busiqnessCard에게 가장 최근 사람의 정보를 넘겨주게 됨.*/}
+            {pickedCards.length > 0 && result}
+        </div>
+    );
 }
